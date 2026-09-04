@@ -3,451 +3,462 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Colecția de jocuri</title>
+<title>Traseu Vacanță · 19 Iulie – 4 August</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#12141a;
-    --surface:#1b1e27;
-    --surface-2:#232733;
-    --border:#2e3340;
-    --text:#eae7de;
-    --muted:#9096a8;
-    --accent:#d4a24c;
-    --accent-soft:rgba(212,162,76,0.16);
-    --good:#7cb894;
-    --mid:#dcb75a;
-    --bad:#c9584f;
+    --ink:#1B2A3D;
+    --ink-deep:#121E2C;
+    --paper:#EDE6D6;
+    --paper-soft:#F6F1E6;
+    --text-dark:#241F19;
+    --text-light:#EDE6D6;
+    --line:#a9977a;
+    --ro:#B8563F;
+    --hu:#C99A3E;
+    --at:#4C7A8C;
+    --it:#6E8C4C;
+    --si:#8C6C9C;
+    --rs:#A85C7C;
+    --muted:#5b6b7d;
+    --radius:10px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--bg);
-    color:var(--text);
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(237,230,214,0.05), transparent 45%),
+      radial-gradient(circle at 85% 92%, rgba(237,230,214,0.04), transparent 40%);
+    color:var(--text-light);
     font-family:'Inter',sans-serif;
-    min-height:100vh;
+    line-height:1.5;
+    padding:0 0 60px 0;
   }
-  h1,h2,.stat-num,.card-title,.sort-label{font-family:'Oswald',sans-serif;}
+  h1,h2,h3{font-family:'Fraunces',serif; margin:0; letter-spacing:0.2px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
 
-  /* ---------- Header ---------- */
-  header{
-    padding:56px 24px 40px;
-    border-bottom:1px solid var(--border);
-    background:
-      radial-gradient(ellipse 900px 300px at 15% 0%, var(--accent-soft), transparent 60%);
+  /* HEADER */
+  header.top{padding:48px 24px 32px;text-align:left;border-bottom:1px solid rgba(237,230,214,0.15);}
+  header.top .eyebrow{font-size:0.85rem;color:var(--hu);font-weight:600;margin-bottom:10px;}
+  header.top h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;max-width:720px;}
+  header.top p.sub{max-width:620px;color:#c8c2b4;margin-top:12px;font-size:1.02rem;}
+  .stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;}
+  .stat{background:rgba(237,230,214,0.06);border:1px solid rgba(237,230,214,0.14);border-radius:var(--radius);padding:14px 18px;min-width:120px;}
+  .stat .num{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;color:var(--paper-soft);}
+  .stat .lbl{font-size:0.8rem;color:#a9a294;margin-top:2px;}
+
+  /* ROUTE MAP (vertical timeline) */
+  section.routemap{padding:40px 0 8px;}
+  section.routemap h2{font-size:1.3rem;padding:0 24px;margin-bottom:6px;}
+  section.routemap p.hint{padding:0 24px;color:#a9a294;font-size:0.9rem;margin-bottom:22px;}
+  .route-scroll{padding:10px 24px 8px;}
+  .route-line{
     position:relative;
-  }
-  .header-inner{max-width:1180px;margin:0 auto;}
-  .eyebrow{
-    color:var(--accent);
-    font-size:13px;
-    letter-spacing:.04em;
-    margin:0 0 10px;
-    font-weight:600;
-  }
-  h1{
-    font-size:clamp(34px,5vw,56px);
-    font-weight:700;
-    letter-spacing:.01em;
-    margin:0 0 14px;
-    line-height:1.02;
-  }
-  header p.sub{
-    color:var(--muted);
-    font-size:16px;
-    max-width:620px;
-    line-height:1.55;
-    margin:0;
-  }
-  .count-badge{
-    display:inline-block;
-    margin-top:22px;
-    padding:6px 14px;
-    border:1px solid var(--border);
-    border-radius:100px;
-    font-size:14px;
-    color:var(--text);
-    background:var(--surface);
-  }
-  .count-badge b{color:var(--accent);}
-
-  /* ---------- Toolbar ---------- */
-  .toolbar{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:rgba(18,20,26,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--border);
-    padding:16px 24px;
-  }
-  .toolbar-inner{
-    max-width:1180px;
-    margin:0 auto;
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    align-items:center;
-  }
-  #search{
-    flex:1 1 220px;
-    background:var(--surface);
-    border:1px solid var(--border);
-    color:var(--text);
-    padding:10px 14px;
-    border-radius:8px;
-    font-size:14px;
-    font-family:'Inter',sans-serif;
-  }
-  #search::placeholder{color:var(--muted);}
-  #search:focus{outline:2px solid var(--accent); outline-offset:1px;}
-
-  .sort-group{display:flex; align-items:center; gap:8px;}
-  .sort-label{font-size:12px; color:var(--muted); font-weight:500; white-space:nowrap;}
-  select{
-    background:var(--surface);
-    border:1px solid var(--border);
-    color:var(--text);
-    padding:9px 12px;
-    border-radius:8px;
-    font-size:14px;
-    font-family:'Inter',sans-serif;
-    cursor:pointer;
-  }
-  select:focus{outline:2px solid var(--accent); outline-offset:1px;}
-
-  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; max-width:1180px; margin-left:auto; margin-right:auto;}
-  .chip{
-    padding:6px 13px;
-    border-radius:100px;
-    border:1px solid var(--border);
-    background:var(--surface);
-    color:var(--muted);
-    font-size:13px;
-    cursor:pointer;
-    user-select:none;
-    transition:border-color .15s, color .15s, background .15s;
-  }
-  .chip:hover{border-color:var(--accent);}
-  .chip.active{
-    background:var(--accent-soft);
-    border-color:var(--accent);
-    color:var(--text);
-  }
-  .chip .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle;}
-
-  /* ---------- Grid ---------- */
-  main{max-width:1180px; margin:0 auto; padding:32px 24px 80px;}
-  #grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
-    gap:18px;
-  }
-  .card{
-    position:relative;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:10px;
-    overflow:hidden;
     display:flex;
     flex-direction:column;
-    transition:transform .15s, border-color .15s;
+    max-width:640px;
   }
-  .card:hover{transform:translateY(-3px); border-color:var(--accent);}
-  .card-spine{height:5px; width:100%;}
-  .card-body{padding:18px 18px 16px;}
-  .rank-badge{
+  .route-line::before{
+    content:"";
     position:absolute;
-    top:13px;
-    left:14px;
-    min-width:24px;
-    height:24px;
-    padding:0 6px;
-    border-radius:6px;
-    background:var(--surface-2);
-    border:1px solid var(--border);
-    color:var(--muted);
-    font-family:'Oswald',sans-serif;
-    font-size:13px;
-    font-weight:600;
+    top:8px;bottom:8px;left:19px;width:2px;
+    background:repeating-linear-gradient(to bottom, var(--line) 0 8px, transparent 8px 14px);
+  }
+  .node{
+    position:relative;
     display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:2;
+    align-items:flex-start;
+    gap:18px;
+    width:100%;
+    padding:0 14px 30px 0;
+    text-align:left;
+    cursor:pointer;
+    background:none;
+    border:none;
+    color:inherit;
+    font-family:inherit;
   }
-  .card-body{padding-top:34px;}
-  .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:2px;}
-  .card-title{font-size:19px; font-weight:600; line-height:1.15; margin:0;}
-  .card-year{font-size:13px; color:var(--muted); white-space:nowrap; margin-top:3px;}
-  .card-dev{font-size:12.5px; color:var(--muted); margin:4px 0 14px;}
-
-  .stat-row{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
-  .stat-row:last-child{margin-bottom:0;}
-  .mc-badge{
-    width:38px; height:38px;
-    border-radius:6px;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Oswald',sans-serif;
-    font-size:15px; font-weight:600;
-    flex-shrink:0;
+  .node:last-child{padding-bottom:0;}
+  .node .dot{
+    flex:none;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--dot,var(--hu));
+    border:3px solid var(--ink);
+    box-shadow:0 0 0 2px rgba(237,230,214,0.5);
+    margin-top:3px;
   }
-  .mc-good{background:rgba(124,184,148,0.18); color:var(--good);}
-  .mc-mid{background:rgba(220,183,90,0.18); color:var(--mid);}
-  .mc-bad{background:rgba(201,88,79,0.18); color:var(--bad);}
-  .stat-text{font-size:13px; color:var(--muted);}
-  .stat-text b{color:var(--text); font-weight:600;}
+  .node .info{display:flex;flex-direction:column;}
+  .node .city{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;color:var(--paper-soft);}
+  .node .hotel{font-size:0.8rem;color:#a9a294;margin-top:2px;}
+  .node .dates{font-size:0.78rem;color:var(--dot,var(--hu));margin-top:5px;font-weight:600;}
+  .node:hover .city{text-decoration:underline;}
 
-  .genre-pill{
-    display:inline-block;
-    padding:3px 10px;
-    border-radius:100px;
-    font-size:12px;
-    font-weight:500;
+  .legend{display:flex;flex-wrap:wrap;gap:16px;padding:6px 24px 0;font-size:0.8rem;color:#c8c2b4;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  /* CALENDAR */
+  section.cal{padding:44px 0 0;}
+  section.cal h2{font-size:1.3rem;padding:0 24px;margin-bottom:6px;}
+  section.cal p.hint{padding:0 24px;color:#a9a294;font-size:0.9rem;margin-bottom:20px;}
+  .months{display:flex;gap:28px;flex-wrap:wrap;padding:0 24px;}
+  .month{background:var(--paper);border-radius:14px;padding:20px;flex:1 1 380px;min-width:300px;}
+  .month h3{color:var(--ink);font-size:1.15rem;margin-bottom:14px;}
+  .grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .wd{text-align:center;font-size:0.72rem;color:var(--muted);font-weight:600;padding-bottom:4px;}
+  .cell{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:8px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:0.85rem;
+    color:var(--text-dark);
   }
-
-  .gfx-wrap{flex:1; display:flex; align-items:center; gap:8px;}
-  .gfx-bar{flex:1; height:6px; background:var(--surface-2); border-radius:4px; overflow:hidden;}
-  .gfx-fill{height:100%; background:linear-gradient(90deg, var(--accent), #eccf8f);}
-  .gfx-num{font-size:12.5px; color:var(--text); font-weight:600; width:32px; text-align:right;}
-
-  .note{
-    margin-top:14px;
-    padding-top:12px;
-    border-top:1px solid var(--border);
-    font-size:12.5px;
-    color:var(--muted);
-    line-height:1.5;
+  .cell.empty{background:transparent;}
+  .cell.plain{background:rgba(27,42,61,0.05);color:#9a917d;}
+  .cell.trip{
+    background:var(--dot,var(--hu));
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 1px 0 rgba(0,0,0,0.08) inset;
+    transition:transform .12s ease;
   }
-
-  .style-tag{font-size:11.5px; color:var(--muted);}
-
-  #empty{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--muted);
-    display:none;
+  .cell.trip:hover{transform:translateY(-2px);}
+  .cell.trip .daynum{font-size:0.95rem;}
+  .cell.trip .check{
+    position:absolute;top:3px;right:3px;
+    width:16px;height:16px;border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.85);
+    background:rgba(0,0,0,0.08);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
   }
+  .cell.trip.done{opacity:0.55;}
+  .cell.trip .check svg{width:10px;height:10px;display:none;}
+  .cell.trip.done .check svg{display:block;}
+  .cell.trip.done .check{background:rgba(255,255,255,0.9);}
+  .cell.trip.done .check svg path{stroke:var(--ink);}
 
-  footer{
-    text-align:center;
-    color:var(--muted);
-    font-size:12.5px;
-    padding:0 24px 50px;
-    max-width:700px;
-    margin:0 auto;
-    line-height:1.6;
+  /* MODAL */
+  .overlay{
+    position:fixed;inset:0;background:rgba(18,30,44,0.72);
+    display:none;align-items:flex-end;justify-content:center;
+    z-index:50;
   }
+  .overlay.show{display:flex;}
+  @media(min-width:720px){
+    .overlay{align-items:center;}
+  }
+  .card{
+    background:var(--paper-soft);
+    color:var(--text-dark);
+    width:100%;max-width:560px;
+    max-height:88vh;overflow-y:auto;
+    border-radius:18px 18px 0 0;
+    padding:26px 26px 34px;
+    transform:translateY(30px);
+    opacity:0;
+    transition:transform .22s ease, opacity .22s ease;
+  }
+  @media(min-width:720px){
+    .card{border-radius:18px;}
+  }
+  .overlay.show .card{transform:translateY(0);opacity:1;}
+  .card .top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .card .badge{
+    display:inline-block;font-size:0.72rem;font-weight:700;color:#fff;
+    background:var(--dot,var(--hu));padding:3px 9px;border-radius:20px;margin-bottom:8px;
+  }
+  .card h3{font-size:1.4rem;color:var(--ink);}
+  .card .close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer;line-height:1;padding:2px 6px;}
+  .card .route{font-size:0.95rem;color:var(--ink);margin-top:6px;font-weight:600;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .chip{font-size:0.78rem;background:rgba(27,42,61,0.08);padding:4px 10px;border-radius:20px;color:var(--ink);}
+  .chip.on{background:var(--it);color:#fff;}
+  .chip.off{background:rgba(184,86,63,0.12);color:var(--ro);}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:16px 0;font-size:0.88rem;}
+  .facts div span.k{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.03em;color:var(--muted);}
+  .block{margin-top:16px;}
+  .block h4{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px;font-weight:600;}
+  .block p{margin:0;font-size:0.94rem;}
+  .note{margin-top:14px;font-size:0.82rem;color:var(--muted);font-style:italic;}
+  .checklist{margin-top:22px;border-top:1px solid rgba(27,42,61,0.12);padding-top:16px;}
+  .checklist h4{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:10px;font-weight:600;}
+  .cl-item{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;}
+  .cl-box{width:19px;height:19px;flex:none;border-radius:5px;border:1.5px solid var(--muted);display:flex;align-items:center;justify-content:center;}
+  .cl-item.checked .cl-box{background:var(--it);border-color:var(--it);}
+  .cl-box svg{width:11px;height:11px;display:none;}
+  .cl-item.checked .cl-box svg{display:block;}
+  .cl-item.checked span.txt{text-decoration:line-through;color:var(--muted);}
 
-  @media (max-width:600px){
-    header{padding:40px 18px 30px;}
-    .toolbar{padding:14px 16px;}
-    main{padding:26px 16px 60px;}
-  }
+  footer.session{padding:36px 24px 0;color:#8a8474;font-size:0.78rem;text-align:left;}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <p class="eyebrow">Bibliotecă personală de jocuri</p>
-    <h1>Colecția de jocuri</h1>
-    <p class="sub">44 de jocuri, cu nota Metacritic, timpul de completare de pe HowLongToBeat, genul și un scor al graficii evaluat subiectiv. Sortează și filtrează cum vrei.</p>
-    <div class="count-badge"><b id="countNum">44</b> jocuri afișate</div>
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">19 iulie – 4 august · 17 zile · 6 țări</div>
+    <h1>Traseul verii: de la Dunăre la Adriatica și înapoi</h1>
+    <p class="sub">București → Arad → Budapesta → Salzburg → Cortina d'Ampezzo → Lacul Como → Lacul Garda → Trieste → Bled/Ljubljana → Plitvice → Belgrad → București.</p>
+    <div class="stats" id="stats"></div>
   </div>
 </header>
 
-<div class="toolbar">
-  <div class="toolbar-inner">
-    <input type="text" id="search" placeholder="Caută un joc după nume...">
-    <div class="sort-group">
-      <span class="sort-label">Sortează după</span>
-      <select id="sortField">
-        <option value="name">Nume</option>
-        <option value="year">An</option>
-        <option value="metacritic" selected>Metacritic</option>
-        <option value="hltb">Timp (HLTB)</option>
-        <option value="graphics">Grafică</option>
-      </select>
-    </div>
-    <div class="sort-group">
-      <select id="sortDir">
-        <option value="desc" selected>Descrescător</option>
-        <option value="asc">Crescător</option>
-      </select>
-    </div>
+<section class="routemap">
+  <div class="wrap" style="padding:0;">
+    <h2>Traseul, popas cu popas</h2>
+    <p class="hint">Fiecare punct e o cazare. Click pe un punct deschide prima zi din acel popas.</p>
   </div>
-  <div class="chips" id="genreChips"></div>
-</div>
+  <div class="route-scroll">
+    <div class="route-line" id="routeLine"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+</section>
 
-<main>
-  <div id="grid"></div>
-  <div id="empty">Niciun joc nu corespunde filtrelor alese.</div>
-</main>
+<section class="cal">
+  <div class="wrap" style="padding:0;">
+    <h2>Calendar</h2>
+    <p class="hint">Click pe o zi pentru detalii. Bifa din colț marchează ziua ca „gata"; bifele din card sunt pentru pregătirile fiecărei zile.</p>
+  </div>
+  <div class="months" id="months"></div>
+</section>
 
-<footer>
-  Notele Metacritic și timpii HowLongToBeat sunt cei disponibili public la momentul redactării și pot varia ușor în timp (recenzii noi, actualizări). Scorul graficii (1-10) nu e o metrică oficială — e o apreciere estimativă, bazată pe consensul general al recenziilor despre calitatea vizuală a fiecărui joc.
+<footer class="session">
+  Bifele se păstrează doar pe durata acestei sesiuni (nu sunt salvate după reîncărcarea paginii).
 </footer>
 
-<script>
-const GENRE_COLORS = {
-  "Action RPG":       "#d4a24c",
-  "Action-Adventure":  "#8fbc94",
-  "FPS":               "#c9584f",
-  "Souls-like":        "#9b7fc9",
-  "Roguelike":         "#4ea8a0",
-  "RPG":               "#c98fb0",
-  "Tactical Shooter":  "#7fa8c9",
-  "Platformer":        "#e0c25a"
-};
+<div class="overlay" id="overlay">
+  <div class="card" id="card"></div>
+</div>
 
-// amount = HLTB "main story" în ore (medie orientativă)
-// graphics = scor subiectiv 1-10 (apreciere estimativă, nu metrică oficială)
-const GAMES = [
-  {name:"Ghost Recon: Wildlands", year:2017, dev:"Ubisoft Paris", genre:"Tactical Shooter", style:"Open World", metacritic:71, hltb:15, graphics:7, note:"Cel mai bun în co-op cu prietenii, în Bolivia."},
-  {name:"Ghost Recon Breakpoint", year:2019, dev:"Ubisoft Paris", genre:"Tactical Shooter", style:"Open World", metacritic:60, hltb:19, graphics:7, note:"Lansare controversată, îmbunătățit ulterior prin update-uri."},
-  {name:"Assassin's Creed Odyssey", year:2018, dev:"Ubisoft Quebec", genre:"Action RPG", style:"Open World", metacritic:85, hltb:44, graphics:8, note:"Grecia Antică, cea mai vastă hartă AC de până atunci."},
-  {name:"Assassin's Creed Origins", year:2017, dev:"Ubisoft Montreal", genre:"Action RPG", style:"Open World", metacritic:82, hltb:34, graphics:8, note:"A reinventat seria cu sistem RPG, în Egipt."},
-  {name:"Assassin's Creed Valhalla", year:2020, dev:"Ubisoft Montreal", genre:"Action RPG", style:"Open World", metacritic:80, hltb:60, graphics:8, note:"Cel mai lung joc AC, epopee vikingă în Anglia."},
-  {name:"Assassin's Creed Mirage", year:2023, dev:"Ubisoft Bordeaux", genre:"Action-Adventure", style:"Semi-open", metacritic:74, hltb:15, graphics:7, note:"Revenire la formula clasică stealth, mai scurt și mai concentrat."},
-  {name:"Assassin's Creed Shadows", year:2025, dev:"Ubisoft Quebec", genre:"Action RPG", style:"Open World", metacritic:82, hltb:35, graphics:9, note:"Japonia feudală, doi protagoniști (Naoe și Yasuke)."},
-  {name:"Far Cry 5", year:2018, dev:"Ubisoft Montreal", genre:"FPS", style:"Open World", metacritic:81, hltb:16, graphics:8, note:"Cult religios în Montana, SUA."},
-  {name:"Far Cry 6", year:2021, dev:"Ubisoft Toronto", genre:"FPS", style:"Open World", metacritic:74, hltb:19, graphics:8, note:"Insula Yara, cu Giancarlo Esposito ca antagonist."},
-  {name:"Black Myth: Wukong", year:2024, dev:"Game Science", genre:"Souls-like", style:"Semi-open", metacritic:81, hltb:27, graphics:9, note:"Bazat pe „Călătorie spre Vest”, hit surpriză chinezesc."},
-  {name:"Lies of P", year:2023, dev:"Neowiz / Round8", genre:"Souls-like", style:"Linear", metacritic:80, hltb:27, graphics:8, note:"Pinocchio reimaginat gotic, Belle Époque."},
-  {name:"Dark Souls", year:2011, dev:"FromSoftware", genre:"Souls-like", style:"Semi-open", metacritic:89, hltb:33, graphics:6, note:"Jocul care a definit genul „souls-like”."},
-  {name:"Dark Souls II", year:2014, dev:"FromSoftware", genre:"Souls-like", style:"Semi-open", metacritic:91, hltb:46, graphics:6, note:"Cel mai criticat de fani, dar cu cel mai mult conținut."},
-  {name:"Dark Souls III", year:2016, dev:"FromSoftware", genre:"Souls-like", style:"Semi-open", metacritic:89, hltb:33, graphics:7, note:"Încheierea trilogiei, ritm mai alert."},
-  {name:"Sniper Elite 4", year:2017, dev:"Rebellion", genre:"Tactical Shooter", style:"Open levels", metacritic:78, hltb:12, graphics:7, note:"Italia, WWII, celebrul X-ray kill-cam."},
-  {name:"Sniper Elite 5", year:2022, dev:"Rebellion", genre:"Tactical Shooter", style:"Open levels", metacritic:77, hltb:13, graphics:7, note:"Franța ocupată, hărți și mai mari."},
-  {name:"Star Wars Jedi: Fallen Order", year:2019, dev:"Respawn Entertainment", genre:"Action-Adventure", style:"Semi-open (Metroidvania)", metacritic:80, hltb:19, graphics:8, note:"Cal Kestis, primul titlu single-player SW modern."},
-  {name:"Star Wars Jedi: Survivor", year:2023, dev:"Respawn Entertainment", genre:"Action-Adventure", style:"Semi-open", metacritic:82, hltb:23, graphics:8, note:"Hărți mai mari, mai multe stiluri de luptă."},
-  {name:"Star Wars Outlaws", year:2024, dev:"Massive Entertainment", genre:"Action-Adventure", style:"Open World", metacritic:74, hltb:22, graphics:8, note:"Primul open-world SW, în pielea unei contrabandiste."},
-  {name:"Avatar: Frontiers of Pandora", year:2023, dev:"Massive Entertainment", genre:"Action-Adventure", style:"Open World", metacritic:74, hltb:18, graphics:9, note:"Pandora recreată impresionant vizual, pe motorul Snowdrop."},
-  {name:"Marvel's Spider-Man", year:2018, dev:"Insomniac Games", genre:"Action-Adventure", style:"Open World", metacritic:87, hltb:17, graphics:8, note:"New York-ul lui Insomniac, balansare superbă."},
-  {name:"Spider-Man: Miles Morales", year:2020, dev:"Insomniac Games", genre:"Action-Adventure", style:"Open World", metacritic:85, hltb:9, graphics:9, note:"Mai scurt, cu puteri bio-electrice noi."},
-  {name:"Spider-Man 2", year:2023, dev:"Insomniac Games", genre:"Action-Adventure", style:"Open World", metacritic:90, hltb:16, graphics:9, note:"Peter și Miles împreună, Venom ca antagonist."},
-  {name:"Returnal", year:2021, dev:"Housemarque", genre:"Roguelike", style:"Procedural", metacritic:86, hltb:14, graphics:9, note:"Roguelike third-person, exclusivitate PS5 la lansare."},
-  {name:"Stellar Blade", year:2024, dev:"Shift Up", genre:"Action RPG", style:"Semi-open", metacritic:80, hltb:18, graphics:9, note:"Post-apocaliptic coreean, luptă stilizată."},
-  {name:"Hades", year:2020, dev:"Supergiant Games", genre:"Roguelike", style:"Procedural", metacritic:93, hltb:22, graphics:8, note:"Roguelike-ul de referință al deceniului."},
-  {name:"Hades II", year:2025, dev:"Supergiant Games", genre:"Roguelike", style:"Procedural", metacritic:94, hltb:25, graphics:8, note:"Melinoë vs. Cronos, continuarea aclamată."},
-  {name:"Red Dead Redemption", year:2010, dev:"Rockstar Studios", genre:"Action-Adventure", style:"Open World", metacritic:95, hltb:17, graphics:8, note:"John Marston, western-ul care a redefinit genul."},
-  {name:"Uncharted: Drake's Fortune", year:2007, dev:"Naughty Dog", genre:"Action-Adventure", style:"Linear", metacritic:89, hltb:8, graphics:7, note:"Primul joc, a pus bazele seriei."},
-  {name:"Uncharted 2: Among Thieves", year:2009, dev:"Naughty Dog", genre:"Action-Adventure", style:"Linear", metacritic:96, hltb:10, graphics:8, note:"Considerat de mulți cel mai bun din serie."},
-  {name:"Uncharted 3: Drake's Deception", year:2011, dev:"Naughty Dog", genre:"Action-Adventure", style:"Linear", metacritic:92, hltb:10, graphics:8, note:"Set-piece-uri spectaculoase, deșert și navă."},
-  {name:"Ghost of Yotei", year:2025, dev:"Sucker Punch Productions", genre:"Action-Adventure", style:"Open World", metacritic:87, hltb:25, graphics:9, note:"Succesorul lui Ghost of Tsushima, Hokkaido, sec. XVII."},
-  {name:"Mass Effect", year:2007, dev:"BioWare", genre:"RPG", style:"Semi-open", metacritic:91, hltb:18, graphics:6, note:"Începutul trilogiei lui Shepard."},
-  {name:"Mass Effect 2", year:2010, dev:"BioWare", genre:"RPG", style:"Semi-open", metacritic:96, hltb:24, graphics:7, note:"Cel mai bine cotat din trilogie."},
-  {name:"Mass Effect 3", year:2012, dev:"BioWare", genre:"RPG", style:"Semi-open", metacritic:93, hltb:26, graphics:7, note:"Finalul (controversat) al trilogiei originale."},
-  {name:"Baldur's Gate 3", year:2023, dev:"Larian Studios", genre:"RPG", style:"Open World", metacritic:96, hltb:75, graphics:8, note:"RPG-ul cu cea mai multă libertate de decizie din ultimii ani."},
-  {name:"Clair Obscur: Expedition 33", year:2025, dev:"Sandfall Interactive", genre:"RPG", style:"Semi-open", metacritic:93, hltb:30, graphics:9, note:"RPG cu tură, francez, unul dintre hiturile surpriză ale anului."},
-  {name:"Metal Gear Solid V: The Phantom Pain", year:2015, dev:"Kojima Productions", genre:"Action-Adventure", style:"Open World", metacritic:93, hltb:32, graphics:8, note:"Ultimul MGS al lui Kojima la Konami, stealth open-world."},
-  {name:"Monster Hunter Wilds", year:2025, dev:"Capcom", genre:"Action RPG", style:"Open World", metacritic:88, hltb:38, graphics:8, note:"Cea mai recentă intrare, lume deschisă dinamică."},
-  {name:"Control", year:2019, dev:"Remedy Entertainment", genre:"Action-Adventure", style:"Semi-open", metacritic:83, hltb:13, graphics:8, note:"Federal Bureau of Control, atmosferă bizară și arhitectură surprinzătoare."},
-  {name:"Doom", year:2016, dev:"id Software", genre:"FPS", style:"Linear", metacritic:85, hltb:10, graphics:7, note:"Reboot-ul care a readus fast-paced shooter-ele în prim-plan."},
-  {name:"Doom Eternal", year:2020, dev:"id Software", genre:"FPS", style:"Linear", metacritic:88, hltb:15, graphics:8, note:"Mai rapid, mai vertical, mai haotic."},
-  {name:"Doom: The Dark Ages", year:2025, dev:"id Software", genre:"FPS", style:"Semi-open", metacritic:85, hltb:16, graphics:9, note:"Prequel medieval, cu scut și dragon."},
-  {name:"Astro Bot", year:2024, dev:"Team Asobi", genre:"Platformer", style:"Linear", metacritic:94, hltb:8, graphics:9, note:"Unul dintre cele mai bine cotate jocuri ale anului 2024."}
+<script>
+const days = [
+  {date:'2026-07-19', pret:340, medie:340, hotel:'Trend Arad', md:null, piscina:null, parcare:null, anulare:null, plecare:null, sosire:null, km:null, timp:null, pranz:null, vizitez:null, note:null, country:'RO'},
+  {date:'2026-07-20', pret:946, medie:946, hotel:'Danubius Hotel Helia', md:'DA', piscina:'DA', parcare:'NU', anulare:'19 Iul', plecare:'București', sosire:'Budapesta', km:820, timp:'10h 30m', pranz:'Pe drum (Arad sau Szeged)', vizitez:'Plimbare de seară pe malul Dunării sau Bastionul Pescarilor din Budapesta.', note:'15€/zi, nu se p... (notă trunchiată în tabel)', country:'HU'},
+  {date:'2026-07-21', pret:1329, medie:665, hotel:'Landgasthof Fürstenbrunn', md:'NU', piscina:'NU', parcare:'DA', anulare:'16 Iul', plecare:'Budapesta', sosire:'Regiunea Salzburg', km:550, timp:'5h 45m', pranz:'Viena sau popas Landzeit pe autostradă', vizitez:'Centrul istoric din Salzburg (Altstadt), Palatul și Grădinile Mirabell.', note:'are parcare gra... (notă trunchiată în tabel)', country:'AT'},
+  {date:'2026-07-22', pret:null, medie:665, hotel:'Landgasthof Fürstenbrunn', md:'NU', piscina:'NU', parcare:'DA', anulare:null, plecare:'Regiunea Salzburg', sosire:'Hallstatt (retur)', km:150, timp:'2h 15m (total)', pranz:'Hallstatt (restaurant cu vedere la lac)', vizitez:'Satul pitoresc Hallstatt, Platforma Skywalk, plimbare pe lac.', note:null, country:'AT'},
+  {date:'2026-07-23', pret:1992, medie:996, hotel:'Hotel Mondeval', md:'DA', piscina:'NU', parcare:'NU', anulare:'14 Iul', plecare:'Regiunea Salzburg', sosire:"Cortina d'Ampezzo", km:230, timp:'3h 45m', pranz:'Lienz (Austria) sau un han tirolez', vizitez:'Pasul Tre Croci, centrul stațiunii alpine Cortina d’Ampezzo înconjurată de Dolomiți.', note:'parcare gratuită', country:'IT'},
+  {date:'2026-07-24', pret:996, medie:996, hotel:'Hotel Mondeval', md:'DA', piscina:'NU', parcare:'NU', anulare:null, plecare:"Cortina d'Ampezzo", sosire:'Lago di Braies (retur)', km:100, timp:'1h 50m (total)', pranz:'Restaurant/cabană lângă lac sau în San Candido', vizitez:'Turul superb al lacului Lago di Braies cu barca, peisajele montane din Dolomiți.', note:null, country:'IT'},
+  {date:'2026-07-25', pret:2458, medie:819, hotel:'Casa Lilu by Comorooms', md:'NU', piscina:'NU', parcare:'NU', anulare:'16 Iul', plecare:"Cortina d'Ampezzo", sosire:'Lacul Como', km:380, timp:'5h 15m', pranz:'Zona Bergamo sau un bistro în Lombardia', vizitez:'Primele impresii pe malul estic al lacului (Varenna sau Lecco).', note:'parcare publică... (notă trunchiată în tabel)', country:'IT'},
+  {date:'2026-07-26', pret:819, medie:819, hotel:'Casa Lilu by Comorooms', md:'NU', piscina:'NU', parcare:'NU', anulare:null, plecare:'Lacul Como', sosire:'Milano (tren)', km:0, timp:'0h (cu trenul)', pranz:'Milano (zona Navigli și panzerotti Luini)', vizitez:'Domul din Milano, Galeriile Vittorio Emanuele II, Castelul Sforzesco.', note:null, country:'IT'},
+  {date:'2026-07-27', pret:819, medie:819, hotel:'Casa Lilu by Comorooms', md:'NU', piscina:'NU', parcare:'NU', anulare:null, plecare:'Lacul Como', sosire:'Bellagio / Varenna', km:0, timp:'0h (cu ferry)', pranz:'Bellagio (o terasă elegantă la malul lacului)', vizitez:'Croazieră cu ferry-boat-ul, explorat străduțele din Bellagio și Varenna.', note:null, country:'IT'},
+  {date:'2026-07-28', pret:1597, medie:799, hotel:'Agriturismo il Rovere', md:'DA', piscina:'NU', parcare:'NU', anulare:'19 Iul', plecare:'Lacul Como', sosire:'Gardaland', km:150, timp:'2h 00m', pranz:'Peschiera del Garda sau în incinta parcului', vizitez:'O zi plină de distracție și adrenalină în faimosul parc tematic Gardaland.', note:null, country:'IT'},
+  {date:'2026-07-29', pret:null, medie:799, hotel:'Agriturismo il Rovere', md:'DA', piscina:'NU', parcare:'NU', anulare:null, plecare:'Zona Lacul Garda', sosire:'Sirmione (retur)', km:40, timp:'1h 00m (total)', pranz:'Sirmione (trattorie locale cu pește proaspăt)', vizitez:'Peninsula și Castelul Scaliger din Sirmione, Grotele lui Catullus, relaxare.', note:null, country:'IT'},
+  {date:'2026-07-30', pret:1748, medie:874, hotel:'Palazzo Machiavelli Trieste', md:'NU', piscina:'NU', parcare:'NU', anulare:'23 Iul', plecare:'Gardaland / Garda', sosire:'Veneția → Trieste', km:300, timp:'4h 30m', pranz:'Veneția (Piața San Marco, Podul Rialto / cicchetti)', vizitez:'Oprire extinsă în Veneția (Piața San Marco, Podul Rialto), apoi deplasare seara spre Trieste.', note:null, country:'IT'},
+  {date:'2026-07-31', pret:null, medie:874, hotel:'Palazzo Machiavelli Trieste', md:'NU', piscina:'NU', parcare:'NU', anulare:null, plecare:'Trieste', sosire:'Trieste', km:0, timp:'0h', pranz:'Barcola, Baia di Sistiana', vizitez:"Castello di Miramare, Piazza Unità d'Italia, Canal Grande.", note:null, country:'IT'},
+  {date:'2026-08-01', pret:786, medie:786, hotel:'House Tina', md:'DA', piscina:'DA', parcare:'NU', anulare:'30 Iul', plecare:'Trieste', sosire:'Lacul Bled → Ljubljana', km:200, timp:'3h 15m', pranz:'Malul Lacului Bled (faimoasa prăjitură Kremšnita)', vizitez:'Vizită la spectaculosul Lac Bled (Castelul și Insula), apoi Ljubljana seara.', note:null, country:'SI'},
+  {date:'2026-08-02', pret:786, medie:786, hotel:'House Tina', md:'DA', piscina:'DA', parcare:'NU', anulare:'17 Iul', plecare:'Ljubljana', sosire:'Regiunea Plitvice', km:210, timp:'3h 00m', pranz:'Rastoke / Slunj (satul morilor de apă)', vizitez:'Explorarea Parcului Național Lacurile Plitvice (trasee pe punți de lemn, cascade).', note:null, country:'SI'},
+  {date:'2026-08-03', pret:null, medie:746, hotel:'Lumiere Hotel Pool & SPA', md:'DA', piscina:'DA', parcare:'NU', anulare:'31 Iul', plecare:'Regiunea Plitvice', sosire:'Belgrad', km:520, timp:'7h', pranz:'Popas pe autostradă sau restaurant la intrare', vizitez:'Cetatea Kalemegdan, strada pietonală Knez Mihailova, cină în Skadarlija.', note:null, country:'RS'},
+  {date:'2026-08-04', pret:null, medie:null, hotel:'București (acasă)', md:null, piscina:null, parcare:null, anulare:null, plecare:'Belgrad', sosire:'București', km:600, timp:'10h', pranz:'Drobeta-Turnu Severin sau Craiova pe traseu', vizitez:'Tranzit, peisaj pe Clisura Dunării și sosire acasă seara.', note:null, country:'RO'}
 ];
 
-let activeGenres = new Set(Object.keys(GENRE_COLORS));
+const countryNames = {RO:'România', HU:'Ungaria', AT:'Austria', IT:'Italia', SI:'Slovenia', RS:'Serbia'};
+const countryVar = {RO:'--ro', HU:'--hu', AT:'--at', IT:'--it', SI:'--si', RS:'--rs'};
 
-function mcClass(v){
-  if(v>=75) return "mc-good";
-  if(v>=50) return "mc-mid";
-  return "mc-bad";
+const checklistTemplate = ['Cazare confirmată','Verificat parcare / termen anulare','Loc de masă ales','Activitate planificată'];
+
+// in-memory state (resets on reload)
+const state = {};
+days.forEach(d => state[d.date] = {done:false, checklist:[false,false,false,false]});
+
+const byDate = Object.fromEntries(days.map(d => [d.date, d]));
+
+function dowLabel(dateStr){
+  const d = new Date(dateStr+'T00:00:00');
+  return d.toLocaleDateString('ro-RO', {weekday:'short'});
+}
+function dayNum(dateStr){ return parseInt(dateStr.slice(-2),10); }
+function fmtLong(dateStr){
+  const d = new Date(dateStr+'T00:00:00');
+  return d.toLocaleDateString('ro-RO', {weekday:'long', day:'numeric', month:'long'});
 }
 
-function gfxClass(v){
-  if(v>=8) return "mc-good";
-  if(v>=6) return "mc-mid";
-  return "mc-bad";
+/* ---------- STATS ---------- */
+function renderStats(){
+  const totalKm = days.reduce((s,d)=> s + (d.km||0), 0);
+  const totalCost = days.reduce((s,d)=> s + (d.pret||0), 0);
+  const countries = new Set(days.map(d=>d.country)).size;
+  const stats = [
+    [days.length, 'zile'],
+    [totalKm.toLocaleString('ro-RO'), 'km parcurși'],
+    [totalCost.toLocaleString('ro-RO')+' lei', 'cazări plătite'],
+    [countries, 'țări']
+  ];
+  document.getElementById('stats').innerHTML = stats.map(([num,lbl]) =>
+    `<div class="stat"><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`
+  ).join('');
 }
 
-function buildChips(){
-  const wrap = document.getElementById("genreChips");
-  wrap.innerHTML = "";
-  Object.keys(GENRE_COLORS).forEach(g=>{
-    const chip = document.createElement("div");
-    chip.className = "chip active";
-    chip.dataset.genre = g;
-    chip.innerHTML = `<span class="dot" style="background:${GENRE_COLORS[g]}"></span>${g}`;
-    chip.addEventListener("click", ()=>{
-      if(activeGenres.has(g)){ activeGenres.delete(g); chip.classList.remove("active"); }
-      else { activeGenres.add(g); chip.classList.add("active"); }
-      render();
-    });
-    wrap.appendChild(chip);
+/* ---------- ROUTE MAP (mind map) ---------- */
+function groupStops(){
+  const stops = [];
+  days.forEach(d => {
+    const last = stops[stops.length-1];
+    if(last && last.hotel === d.hotel){
+      last.end = d.date;
+      last.nights++;
+    } else {
+      stops.push({hotel:d.hotel, start:d.date, end:d.date, nights:1, country:d.country});
+    }
   });
+  return stops;
+}
+function cityFromStop(s){
+  // prefer sosire of the first day in the stop as the display "place"
+  const first = byDate[s.start];
+  return first.sosire || first.hotel;
+}
+function renderRouteMap(){
+  const stops = groupStops();
+  const html = stops.map(s => {
+    const varName = countryVar[s.country];
+    const startLbl = new Date(s.start+'T00:00:00').toLocaleDateString('ro-RO',{day:'numeric',month:'short'});
+    const endLbl = new Date(s.end+'T00:00:00').toLocaleDateString('ro-RO',{day:'numeric',month:'short'});
+    const dateRange = s.start === s.end ? startLbl : `${startLbl} – ${endLbl}`;
+    return `<button class="node" style="--dot:var(${varName})" onclick="openDay('${s.start}')">
+      <span class="dot"></span>
+      <span class="info">
+        <span class="city">${cityFromStop(s)}</span>
+        <span class="hotel">${s.hotel}</span>
+        <span class="dates">${dateRange} · ${s.nights} ${s.nights===1?'noapte':'nopți'}</span>
+      </span>
+    </button>`;
+  }).join('');
+  document.getElementById('routeLine').innerHTML = html;
+
+  const legendHtml = Object.keys(countryNames).map(c =>
+    `<span><i style="background:var(${countryVar[c]})"></i>${countryNames[c]}</span>`
+  ).join('');
+  document.getElementById('legend').innerHTML = legendHtml;
 }
 
-function render(){
-  const q = document.getElementById("search").value.trim().toLowerCase();
-  const field = document.getElementById("sortField").value;
-  const dir = document.getElementById("sortDir").value === "asc" ? 1 : -1;
+/* ---------- CALENDAR ---------- */
+const WD = ['L','Ma','Mi','J','V','S','D'];
+function renderMonth(year, monthIndex, label){
+  const first = new Date(year, monthIndex, 1);
+  const numDays = new Date(year, monthIndex+1, 0).getDate();
+  let startOffset = first.getDay(); // 0=Sun
+  startOffset = (startOffset === 0) ? 6 : startOffset - 1; // Monday-first
 
-  let list = GAMES.filter(g =>
-    activeGenres.has(g.genre) &&
-    g.name.toLowerCase().includes(q)
-  );
+  let cells = '';
+  for(let i=0;i<startOffset;i++) cells += `<div class="cell empty"></div>`;
 
-  list.sort((a,b)=>{
-    let av = a[field], bv = b[field];
-    if(field === "name"){ av = av.toLowerCase(); bv = bv.toLowerCase(); return av.localeCompare(bv) * dir; }
-    return (av - bv) * dir;
-  });
+  for(let day=1; day<=numDays; day++){
+    const iso = `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const d = byDate[iso];
+    if(d){
+      const varName = countryVar[d.country];
+      cells += `<div class="cell trip" style="--dot:var(${varName})" id="cell-${iso}" onclick="openDay('${iso}')">
+        <span class="daynum">${day}</span>
+        <span class="check" onclick="toggleDone(event,'${iso}')">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1B2A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>`;
+    } else {
+      cells += `<div class="cell plain">${day}</div>`;
+    }
+  }
+  return `<div class="month">
+    <h3>${label}</h3>
+    <div class="grid7">${WD.map(w=>`<div class="wd">${w}</div>`).join('')}${cells}</div>
+  </div>`;
+}
+function renderCalendar(){
+  const html = renderMonth(2026, 6, 'Iulie 2026') + renderMonth(2026, 7, 'August 2026');
+  document.getElementById('months').innerHTML = html;
+}
 
-  const grid = document.getElementById("grid");
-  const empty = document.getElementById("empty");
-  grid.innerHTML = "";
-  document.getElementById("countNum").textContent = list.length;
+/* ---------- MODAL / CARD ---------- */
+function fact(label, value){
+  if(value === null || value === undefined || value === '') value = '—';
+  return `<div><span class="k">${label}</span>${value}</div>`;
+}
+function openDay(iso){
+  const d = byDate[iso];
+  const st = state[iso];
+  const varName = countryVar[d.country];
 
-  if(list.length === 0){ empty.style.display = "block"; return; }
-  empty.style.display = "none";
+  const mdChip = d.md ? `<span class="chip ${d.md==='DA'?'on':'off'}">Mic dejun: ${d.md}</span>` : '';
+  const poolChip = d.piscina ? `<span class="chip ${d.piscina==='DA'?'on':'off'}">Piscină: ${d.piscina}</span>` : '';
+  const parkChip = d.parcare ? `<span class="chip ${d.parcare==='DA'?'on':'off'}">Parcare: ${d.parcare}</span>` : '';
+  const anulareChip = d.anulare ? `<span class="chip">Anulare gratuită până la ${d.anulare}</span>` : '';
 
-  list.forEach((g, i)=>{
-    const color = GENRE_COLORS[g.genre] || "#888";
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="card-spine" style="background:${color}"></div>
-      <div class="rank-badge">${i+1}</div>
-      <div class="card-body">
-        <div class="card-top">
-          <h3 class="card-title">${g.name}</h3>
-          <span class="card-year">${g.year}</span>
-        </div>
-        <div class="card-dev">${g.dev} · <span class="style-tag">${g.style}</span></div>
+  const routeLine = (d.plecare || d.sosire) ? `<div class="route">${d.plecare || '—'} → ${d.sosire || '—'}</div>` : '';
 
-        <div class="stat-row">
-          <div class="mc-badge ${mcClass(g.metacritic)}">${g.metacritic}</div>
-          <div class="stat-text">Metacritic <b>${g.metacritic}/100</b></div>
-        </div>
+  const checklistHtml = checklistTemplate.map((item, idx) => {
+    const checked = st.checklist[idx];
+    return `<div class="cl-item ${checked?'checked':''}" onclick="toggleChecklistItem('${iso}', ${idx})">
+      <span class="cl-box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="txt">${item}</span>
+    </div>`;
+  }).join('');
 
-        <div class="stat-row">
-          <span class="genre-pill" style="background:${color}22; color:${color}">${g.genre}</span>
-          <div class="stat-text"><b>${g.hltb}h</b> poveste principală (HLTB)</div>
-        </div>
-
-        <div class="stat-row">
-          <div class="mc-badge ${gfxClass(g.graphics)}">${g.graphics}</div>
-          <div class="stat-text">Grafică <b>${g.graphics}/10</b></div>
-        </div>
-
-        <div class="note">${g.note}</div>
+  document.getElementById('card').innerHTML = `
+    <div class="top-row">
+      <div>
+        <span class="badge" style="--dot:var(${varName})">${countryNames[d.country]}</span>
+        <h3>${fmtLong(iso)}</h3>
+        ${routeLine}
       </div>
-    `;
-    grid.appendChild(card);
-  });
+      <button class="close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="chips">${mdChip}${poolChip}${parkChip}${anulareChip}</div>
+    <div class="facts">
+      ${fact('Cazare', d.hotel)}
+      ${fact('Preț noapte', d.pret ? d.pret+' lei' : (d.medie ? d.medie+' lei (medie)' : null))}
+      ${fact('Distanță', d.km !== null ? d.km+' km' : null)}
+      ${fact('Timp pe drum', d.timp)}
+    </div>
+    ${d.pranz ? `<div class="block"><h4>Unde iau prânzul</h4><p>${d.pranz}</p></div>` : ''}
+    ${d.vizitez ? `<div class="block"><h4>Ce vizitez</h4><p>${d.vizitez}</p></div>` : ''}
+    ${d.note ? `<p class="note">${d.note}</p>` : ''}
+    <div class="checklist">
+      <h4>Pregătiri pentru ziua asta</h4>
+      ${checklistHtml}
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){
+  document.getElementById('overlay').classList.remove('show');
+}
+document.getElementById('overlay').addEventListener('click', (e) => {
+  if(e.target.id === 'overlay') closeModal();
+});
+
+function toggleDone(e, iso){
+  e.stopPropagation();
+  const st = state[iso];
+  st.done = !st.done;
+  st.checklist = st.checklist.map(() => st.done);
+  updateTileUI(iso);
+  if(document.getElementById('overlay').classList.contains('show')){
+    // refresh card if it's currently showing this day
+    const h3 = document.querySelector('#card h3');
+    if(h3 && h3.textContent === fmtLong(iso)) openDay(iso);
+  }
+}
+function toggleChecklistItem(iso, idx){
+  const st = state[iso];
+  st.checklist[idx] = !st.checklist[idx];
+  st.done = st.checklist.every(Boolean);
+  openDay(iso);
+  updateTileUI(iso);
+}
+function updateTileUI(iso){
+  const cell = document.getElementById('cell-'+iso);
+  if(!cell) return;
+  cell.classList.toggle('done', state[iso].done);
 }
 
-document.getElementById("search").addEventListener("input", render);
-document.getElementById("sortField").addEventListener("change", render);
-document.getElementById("sortDir").addEventListener("change", render);
-
-buildChips();
-render();
+renderStats();
+renderRouteMap();
+renderCalendar();
 </script>
-
 </body>
 </html>
