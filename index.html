@@ -145,6 +145,7 @@
     gap:18px;
   }
   .card{
+    position:relative;
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:10px;
@@ -156,6 +157,26 @@
   .card:hover{transform:translateY(-3px); border-color:var(--accent);}
   .card-spine{height:5px; width:100%;}
   .card-body{padding:18px 18px 16px;}
+  .rank-badge{
+    position:absolute;
+    top:13px;
+    left:14px;
+    min-width:24px;
+    height:24px;
+    padding:0 6px;
+    border-radius:6px;
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--muted);
+    font-family:'Oswald',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+  }
+  .card-body{padding-top:34px;}
   .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:2px;}
   .card-title{font-size:19px; font-weight:600; line-height:1.15; margin:0;}
   .card-year{font-size:13px; color:var(--muted); white-space:nowrap; margin-top:3px;}
@@ -337,6 +358,12 @@ function mcClass(v){
   return "mc-bad";
 }
 
+function gfxClass(v){
+  if(v>=8) return "mc-good";
+  if(v>=6) return "mc-mid";
+  return "mc-bad";
+}
+
 function buildChips(){
   const wrap = document.getElementById("genreChips");
   wrap.innerHTML = "";
@@ -378,12 +405,13 @@ function render(){
   if(list.length === 0){ empty.style.display = "block"; return; }
   empty.style.display = "none";
 
-  list.forEach(g=>{
+  list.forEach((g, i)=>{
     const color = GENRE_COLORS[g.genre] || "#888";
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
       <div class="card-spine" style="background:${color}"></div>
+      <div class="rank-badge">${i+1}</div>
       <div class="card-body">
         <div class="card-top">
           <h3 class="card-title">${g.name}</h3>
@@ -402,10 +430,8 @@ function render(){
         </div>
 
         <div class="stat-row">
-          <div class="gfx-wrap">
-            <div class="gfx-bar"><div class="gfx-fill" style="width:${g.graphics*10}%"></div></div>
-            <div class="gfx-num">${g.graphics}/10</div>
-          </div>
+          <div class="mc-badge ${gfxClass(g.graphics)}">${g.graphics}</div>
+          <div class="stat-text">Grafică <b>${g.graphics}/10</b></div>
         </div>
 
         <div class="note">${g.note}</div>
