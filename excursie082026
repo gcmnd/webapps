@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traseu Vacanță · 23 – 30 August</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A3D;
+    --ink-deep:#121E2C;
+    --paper:#EDE6D6;
+    --paper-soft:#F6F1E6;
+    --text-dark:#241F19;
+    --text-light:#EDE6D6;
+    --line:#a9977a;
+    --z1:#B8563F;
+    --z2:#C99A3E;
+    --z3:#4C7A8C;
+    --z4:#6E8C4C;
+    --z5:#8C6C9C;
+    --muted:#5b6b7d;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(237,230,214,0.05), transparent 45%),
+      radial-gradient(circle at 85% 92%, rgba(237,230,214,0.04), transparent 40%);
+    color:var(--text-light);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    padding:0 0 60px 0;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif; margin:0; letter-spacing:0.2px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* HEADER */
+  header.top{padding:48px 24px 32px;text-align:left;border-bottom:1px solid rgba(237,230,214,0.15);}
+  header.top .eyebrow{font-size:0.85rem;color:var(--z2);font-weight:600;margin-bottom:10px;}
+  header.top h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;max-width:720px;}
+  header.top p.sub{max-width:620px;color:#c8c2b4;margin-top:12px;font-size:1.02rem;}
+  .stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;}
+  .stat{background:rgba(237,230,214,0.06);border:1px solid rgba(237,230,214,0.14);border-radius:var(--radius);padding:14px 18px;min-width:120px;}
+  .stat .num{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;color:var(--paper-soft);}
+  .stat .lbl{font-size:0.8rem;color:#a9a294;margin-top:2px;}
+
+  /* ROUTE MAP */
+  section.routemap{padding:40px 0 8px;}
+  section.routemap h2{font-size:1.3rem;padding:0 24px;margin-bottom:6px;}
+  section.routemap p.hint{padding:0 24px;color:#a9a294;font-size:0.9rem;margin-bottom:22px;}
+  .route-scroll{overflow-x:auto;padding:10px 24px 26px;}
+  .route-line{
+    position:relative;
+    display:flex;
+    gap:0;
+    min-width:max-content;
+  }
+  .route-line::before{
+    content:"";
+    position:absolute;
+    top:19px;left:20px;right:20px;height:2px;
+    background:repeating-linear-gradient(to right, var(--line) 0 8px, transparent 8px 14px);
+  }
+  .node{
+    position:relative;
+    width:172px;
+    padding:0 14px;
+    text-align:left;
+    cursor:pointer;
+    background:none;
+    border:none;
+    color:inherit;
+    font-family:inherit;
+  }
+  .node .dot{
+    width:14px;height:14px;border-radius:50%;
+    background:var(--dot,var(--z2));
+    border:3px solid var(--ink);
+    box-shadow:0 0 0 2px rgba(237,230,214,0.5);
+    margin-bottom:14px;
+  }
+  .node .city{font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;color:var(--paper-soft);}
+  .node .hotel{font-size:0.78rem;color:#a9a294;margin-top:2px;}
+  .node .dates{font-size:0.76rem;color:var(--dot,var(--z2));margin-top:6px;font-weight:600;}
+  .node:hover .city{text-decoration:underline;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;padding:6px 24px 0;font-size:0.8rem;color:#c8c2b4;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  /* BUGET */
+  section.buget{padding:44px 0 0;}
+  section.buget h2{font-size:1.3rem;padding:0 24px;margin-bottom:16px;}
+  .buget-box{margin:0 24px;background:var(--paper);border-radius:14px;padding:20px 24px;color:var(--text-dark);}
+  .buget-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.94rem;border-bottom:1px solid rgba(27,42,61,0.08);}
+  .buget-row:last-child{border-bottom:none;}
+  .buget-row.total{font-weight:700;font-size:1.05rem;padding-top:14px;border-top:2px solid var(--ink);margin-top:6px;}
+  .buget-row .v{font-variant-numeric:tabular-nums;}
+
+  /* CALENDAR */
+  section.cal{padding:44px 0 0;}
+  section.cal h2{font-size:1.3rem;padding:0 24px;margin-bottom:6px;}
+  section.cal p.hint{padding:0 24px;color:#a9a294;font-size:0.9rem;margin-bottom:20px;}
+  .months{display:flex;flex-direction:column;gap:28px;padding:0 24px;}
+  .month{background:var(--paper);border-radius:14px;padding:20px;width:100%;}
+  .month h3{color:var(--ink);font-size:1.15rem;margin-bottom:14px;}
+  .grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .wd{text-align:center;font-size:0.72rem;color:var(--muted);font-weight:600;padding-bottom:4px;}
+  .cell{
+    position:relative;
+    min-height:74px;
+    border-radius:8px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:0.85rem;
+    color:var(--text-dark);
+    padding:6px 4px 5px;
+  }
+  .cell.empty{background:transparent;}
+  .cell.plain{background:rgba(27,42,61,0.05);color:#9a917d;}
+  .cell.trip{
+    background:var(--dot,var(--z2));
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 1px 0 rgba(0,0,0,0.08) inset;
+    transition:transform .12s ease;
+  }
+  .cell.trip:hover{transform:translateY(-2px);}
+  .cell.trip .daynum{
+    position:absolute;top:5px;left:7px;
+    font-size:0.78rem;font-weight:700;
+  }
+  .cell.trip .place{
+    font-size:0.68rem;
+    font-weight:600;
+    line-height:1.2;
+    text-align:center;
+    padding:0 4px;
+    margin-top:6px;
+    word-break:break-word;
+  }
+  .cell.trip .check{
+    position:absolute;top:3px;right:3px;
+    width:16px;height:16px;border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.85);
+    background:rgba(0,0,0,0.08);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .cell.trip.done{opacity:0.55;}
+  .cell.trip .check svg{width:10px;height:10px;display:none;}
+  .cell.trip.done .check svg{display:block;}
+  .cell.trip.done .check{background:rgba(255,255,255,0.9);}
+  .cell.trip.done .check svg path{stroke:var(--ink);}
+
+  /* MODAL */
+  .overlay{
+    position:fixed;inset:0;background:rgba(18,30,44,0.72);
+    display:none;align-items:flex-end;justify-content:center;
+    z-index:50;
+  }
+  .overlay.show{display:flex;}
+  @media(min-width:720px){
+    .overlay{align-items:center;}
+  }
+  .card{
+    background:var(--paper-soft);
+    color:var(--text-dark);
+    width:100%;max-width:560px;
+    max-height:88vh;overflow-y:auto;
+    border-radius:18px 18px 0 0;
+    padding:26px 26px 34px;
+    transform:translateY(30px);
+    opacity:0;
+    transition:transform .22s ease, opacity .22s ease;
+  }
+  @media(min-width:720px){
+    .card{border-radius:18px;}
+  }
+  .overlay.show .card{transform:translateY(0);opacity:1;}
+  .card .top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .card .badge{
+    display:inline-block;font-size:0.72rem;font-weight:700;color:#fff;
+    background:var(--dot,var(--z2));padding:3px 9px;border-radius:20px;margin-bottom:8px;
+  }
+  .card h3{font-size:1.4rem;color:var(--ink);}
+  .card .close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer;line-height:1;padding:2px 6px;}
+  .card .route{font-size:0.95rem;color:var(--ink);margin-top:6px;font-weight:600;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .chip{font-size:0.78rem;background:rgba(27,42,61,0.08);padding:4px 10px;border-radius:20px;color:var(--ink);}
+  .chip.on{background:var(--z4);color:#fff;}
+  .chip.off{background:rgba(184,86,63,0.12);color:var(--z1);}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:16px 0;font-size:0.88rem;}
+  .facts div span.k{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.03em;color:var(--muted);}
+  .block{margin-top:16px;}
+  .block h4{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px;font-weight:600;}
+  .block p{margin:0;font-size:0.94rem;}
+  .checklist{margin-top:22px;border-top:1px solid rgba(27,42,61,0.12);padding-top:16px;}
+  .checklist h4{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:10px;font-weight:600;}
+  .cl-item{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;}
+  .cl-box{width:19px;height:19px;flex:none;border-radius:5px;border:1.5px solid var(--muted);display:flex;align-items:center;justify-content:center;}
+  .cl-item.checked .cl-box{background:var(--z4);border-color:var(--z4);}
+  .cl-box svg{width:11px;height:11px;display:none;}
+  .cl-item.checked .cl-box svg{display:block;}
+  .cl-item.checked span.txt{text-decoration:line-through;color:var(--muted);}
+
+  footer.session{padding:36px 24px 0;color:#8a8474;font-size:0.78rem;text-align:left;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">23 – 30 august · 8 zile · 7 nopți de cazare</div>
+    <h1>Vacanța de vară în Moldova, Ardeal și Prahova</h1>
+    <p class="sub">Sascut → Suceava → Jelna → Odorheiu Secuiesc → Bușteni → București.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<section class="routemap">
+  <div class="wrap" style="padding:0;">
+    <h2>Harta traseului</h2>
+    <p class="hint">Fiecare punct e o cazare. Click pe un punct deschide prima zi din acel popas.</p>
+  </div>
+  <div class="route-scroll">
+    <div class="route-line" id="routeLine"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section class="cal">
+  <div class="wrap" style="padding:0;">
+    <h2>Calendar</h2>
+    <p class="hint">Click pe o zi pentru detalii. Bifa din colț marchează ziua ca „gata"; bifele din card sunt pentru pregătirile fiecărei zile.</p>
+  </div>
+  <div class="months" id="months"></div>
+</section>
+
+<section class="buget">
+  <div class="wrap" style="padding:0;">
+    <h2>Buget</h2>
+  </div>
+  <div class="buget-box" id="bugetBox"></div>
+</section>
+
+<footer class="session">
+  Bifele se păstrează doar pe durata acestei sesiuni (nu sunt salvate după reîncărcarea paginii).
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+const days = [
+  {date:'2026-08-23', pret:533, hotel:'Mandachi', md:'DA', piscina:'DA', parcare:'DA', anulare:'21 Aug', plecare:'Sascut', sosire:'Suceava', km:192, timp:'3h 30m', pranz:'Mandachi', obiective:null},
+  {date:'2026-08-24', pret:567, hotel:'Crama Jelna', md:'NU', piscina:'NU', parcare:'DA', anulare:'21 Aug', plecare:'Suceava', sosire:'Jelna', km:177, timp:'3h 30m', pranz:'Mestecăniș', obiective:null},
+  {date:'2026-08-25', pret:1281, hotel:'Crama Jelna', md:'DA', piscina:'DA', parcare:'DA', anulare:'19 Aug', plecare:'Jelna', sosire:'Jelna', km:100, timp:'2h 30m', pranz:'Jelna', obiective:null},
+  {date:'2026-08-26', pret:null, hotel:'Crama Jelna', md:'DA', piscina:'DA', parcare:'DA', anulare:null, plecare:null, sosire:'Jelna', km:null, timp:null, pranz:'Jelna', obiective:null},
+  {date:'2026-08-27', pret:1088, hotel:'Septimia Hotels / Odorheiu Secuiesc', md:'DA', piscina:'DA', parcare:'DA', anulare:'23 Aug', plecare:'Jelna', sosire:'Odorheiu Secuiesc', km:187, timp:'4h 30m', pranz:'Miercurea Ciuc', obiective:'Jelna - Toplița (pârtia de bob) - Miercurea Ciuc - Odorheiu Secuiesc'},
+  {date:'2026-08-28', pret:null, hotel:'Septimia Hotels / Odorheiu Secuiesc', md:'DA', piscina:'DA', parcare:'DA', anulare:null, plecare:'Odorheiu Secuiesc', sosire:'Odorheiu Secuiesc', km:146, timp:'4h', pranz:'Odorheiu Secuiesc', obiective:'Odorheiu Secuiesc'},
+  {date:'2026-08-29', pret:380, hotel:'Margaritar / Bușteni', md:'DA', piscina:'NU', parcare:'DA', anulare:'24 Aug', plecare:'Odorheiu Secuiesc', sosire:'Bușteni', km:157, timp:'4h', pranz:'Drăgului', obiective:'Odorheiu Secuiesc - Cheile Vârghișului - Castelul Kálnoky - Brașov - Poiana Secuilor - Bușteni'},
+  {date:'2026-08-30', pret:0, hotel:'București', md:'DA', piscina:'NU', parcare:'DA', anulare:null, plecare:'Bușteni', sosire:'București', km:150, timp:'3h', pranz:null, obiective:'Peleș, Parcul Sinaia, Lacul Bolboci, Platoul Bucegi'}
+];
+
+const bugetItems = [
+  {label:'Total cazări', value:3849},
+  {label:'Carburant', value:0},
+  {label:'Taxe drum', value:0},
+  {label:'Asigurare familie', value:0},
+  {label:'Mese', value:3201},
+  {label:'Obiective turistice', value:0}
+];
+const bugetTotal = 7050;
+
+const paletteVars = ['--z1','--z2','--z3','--z4','--z5'];
+const checklistTemplate = ['Cazare confirmată','Verificat parcare / termen anulare','Loc de masă ales','Activitate planificată'];
+
+// in-memory state (resets on reload)
+const state = {};
+days.forEach(d => state[d.date] = {done:false, checklist:[false,false,false,false]});
+
+const byDate = Object.fromEntries(days.map(d => [d.date, d]));
+
+/* ---------- group consecutive days by hotel into "stops", assign a color to each ---------- */
+function groupStops(){
+  const stops = [];
+  days.forEach(d => {
+    const last = stops[stops.length-1];
+    if(last && last.hotel === d.hotel){
+      last.end = d.date;
+      last.nights++;
+      last.days.push(d);
+    } else {
+      stops.push({hotel:d.hotel, start:d.date, end:d.date, nights:1, days:[d]});
+    }
+  });
+  stops.forEach((s,i) => { s.colorVar = paletteVars[i % paletteVars.length]; });
+  return stops;
+}
+const stops = groupStops();
+// give every day a reference to its stop's color + a display place (the "sosire" city)
+stops.forEach(s => { s.days.forEach(d => { d.colorVar = s.colorVar; }); });
+
+function dowLabel(dateStr){
+  const d = new Date(dateStr+'T00:00:00');
+  return d.toLocaleDateString('ro-RO', {weekday:'short'});
+}
+function fmtLong(dateStr){
+  const d = new Date(dateStr+'T00:00:00');
+  return d.toLocaleDateString('ro-RO', {weekday:'long', day:'numeric', month:'long'});
+}
+function cityFromStop(s){
+  return s.days[0].sosire || s.hotel;
+}
+
+/* ---------- STATS ---------- */
+function renderStats(){
+  const totalKm = days.reduce((s,d)=> s + (d.km||0), 0);
+  const nights = days.filter(d => d.pret !== 0 || d.hotel !== 'București').length - 1 >= 0 ? stops.filter(s=>s.hotel!=='București').reduce((s,st)=>s+st.nights,0) : 0;
+  const stats = [
+    [days.length, 'zile'],
+    [totalKm.toLocaleString('ro-RO'), 'km parcurși'],
+    [nights, 'nopți de cazare'],
+    [bugetTotal.toLocaleString('ro-RO')+' lei', 'buget total']
+  ];
+  document.getElementById('stats').innerHTML = stats.map(([num,lbl]) =>
+    `<div class="stat"><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`
+  ).join('');
+}
+
+/* ---------- BUGET ---------- */
+function renderBuget(){
+  const rows = bugetItems.map(item =>
+    `<div class="buget-row"><span>${item.label}</span><span class="v">${item.value.toLocaleString('ro-RO')} lei</span></div>`
+  ).join('');
+  document.getElementById('bugetBox').innerHTML = rows +
+    `<div class="buget-row total"><span>TOTAL</span><span class="v">${bugetTotal.toLocaleString('ro-RO')} lei</span></div>`;
+}
+
+/* ---------- ROUTE MAP (mind map) ---------- */
+function renderRouteMap(){
+  const html = stops.map(s => {
+    const startLbl = new Date(s.start+'T00:00:00').toLocaleDateString('ro-RO',{day:'numeric',month:'short'});
+    const endLbl = new Date(s.end+'T00:00:00').toLocaleDateString('ro-RO',{day:'numeric',month:'short'});
+    const dateRange = s.start === s.end ? startLbl : `${startLbl} – ${endLbl}`;
+    return `<button class="node" style="--dot:var(${s.colorVar})" onclick="openDay('${s.start}')">
+      <span class="dot"></span>
+      <span class="city">${cityFromStop(s)}</span>
+      <span class="hotel">${s.hotel}</span>
+      <span class="dates">${dateRange} · ${s.nights} ${s.nights===1?'noapte':'nopți'}</span>
+    </button>`;
+  }).join('');
+  document.getElementById('routeLine').innerHTML = html;
+
+  const legendHtml = stops.map(s =>
+    `<span><i style="background:var(${s.colorVar})"></i>${cityFromStop(s)}</span>`
+  ).join('');
+  document.getElementById('legend').innerHTML = legendHtml;
+}
+
+/* ---------- CALENDAR ---------- */
+const WD = ['L','Ma','Mi','J','V','S','D'];
+function renderMonth(year, monthIndex, label){
+  const first = new Date(year, monthIndex, 1);
+  const numDays = new Date(year, monthIndex+1, 0).getDate();
+  let startOffset = first.getDay(); // 0=Sun
+  startOffset = (startOffset === 0) ? 6 : startOffset - 1; // Monday-first
+
+  let cells = '';
+  for(let i=0;i<startOffset;i++) cells += `<div class="cell empty"></div>`;
+
+  for(let day=1; day<=numDays; day++){
+    const iso = `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const d = byDate[iso];
+    if(d){
+      const place = d.sosire; // orașul din coloana "Sosire"
+      cells += `<div class="cell trip" style="--dot:var(${d.colorVar})" id="cell-${iso}" onclick="openDay('${iso}')">
+        <span class="daynum">${day}</span>
+        <span class="place">${place}</span>
+        <span class="check" onclick="toggleDone(event,'${iso}')">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1B2A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>`;
+    } else {
+      cells += `<div class="cell plain">${day}</div>`;
+    }
+  }
+  return `<div class="month">
+    <h3>${label}</h3>
+    <div class="grid7">${WD.map(w=>`<div class="wd">${w}</div>`).join('')}${cells}</div>
+  </div>`;
+}
+function renderCalendar(){
+  const html = renderMonth(2026, 7, 'August 2026');
+  document.getElementById('months').innerHTML = html;
+}
+
+/* ---------- MODAL / CARD ---------- */
+function fact(label, value){
+  if(value === null || value === undefined || value === '') value = '—';
+  return `<div><span class="k">${label}</span>${value}</div>`;
+}
+function openDay(iso){
+  const d = byDate[iso];
+  const st = state[iso];
+
+  const mdChip = d.md ? `<span class="chip ${d.md==='DA'?'on':'off'}">Mic dejun: ${d.md}</span>` : '';
+  const poolChip = d.piscina ? `<span class="chip ${d.piscina==='DA'?'on':'off'}">Piscină: ${d.piscina}</span>` : '';
+  const parkChip = d.parcare ? `<span class="chip ${d.parcare==='DA'?'on':'off'}">Parcare: ${d.parcare}</span>` : '';
+  const anulareChip = d.anulare ? `<span class="chip">Anulare gratuită până la ${d.anulare}</span>` : '';
+
+  const routeLine = (d.plecare || d.sosire) ? `<div class="route">${d.plecare || '—'} → ${d.sosire || '—'}</div>` : '';
+
+  const checklistHtml = checklistTemplate.map((item, idx) => {
+    const checked = st.checklist[idx];
+    return `<div class="cl-item ${checked?'checked':''}" onclick="toggleChecklistItem('${iso}', ${idx})">
+      <span class="cl-box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="txt">${item}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('card').innerHTML = `
+    <div class="top-row">
+      <div>
+        <span class="badge" style="--dot:var(${d.colorVar})">${d.hotel}</span>
+        <h3>${fmtLong(iso)}</h3>
+        ${routeLine}
+      </div>
+      <button class="close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="chips">${mdChip}${poolChip}${parkChip}${anulareChip}</div>
+    <div class="facts">
+      ${fact('Preț cazare', d.pret !== null ? d.pret+' lei' : 'inclus în noaptea anterioară')}
+      ${fact('Distanță', d.km !== null ? d.km+' km' : null)}
+      ${fact('Timp pe drum', d.timp)}
+    </div>
+    ${d.pranz ? `<div class="block"><h4>Prânz</h4><p>${d.pranz}</p></div>` : ''}
+    ${d.obiective ? `<div class="block"><h4>Obiective</h4><p>${d.obiective}</p></div>` : ''}
+    <div class="checklist">
+      <h4>Pregătiri pentru ziua asta</h4>
+      ${checklistHtml}
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){
+  document.getElementById('overlay').classList.remove('show');
+}
+document.getElementById('overlay').addEventListener('click', (e) => {
+  if(e.target.id === 'overlay') closeModal();
+});
+
+function toggleDone(e, iso){
+  e.stopPropagation();
+  const st = state[iso];
+  st.done = !st.done;
+  st.checklist = st.checklist.map(() => st.done);
+  updateTileUI(iso);
+  if(document.getElementById('overlay').classList.contains('show')){
+    const h3 = document.querySelector('#card h3');
+    if(h3 && h3.textContent === fmtLong(iso)) openDay(iso);
+  }
+}
+function toggleChecklistItem(iso, idx){
+  const st = state[iso];
+  st.checklist[idx] = !st.checklist[idx];
+  st.done = st.checklist.every(Boolean);
+  openDay(iso);
+  updateTileUI(iso);
+}
+function updateTileUI(iso){
+  const cell = document.getElementById('cell-'+iso);
+  if(!cell) return;
+  cell.classList.toggle('done', state[iso].done);
+}
+
+renderStats();
+renderRouteMap();
+renderBuget();
+renderCalendar();
+</script>
+</body>
+</html>
